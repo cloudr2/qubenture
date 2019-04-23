@@ -1,20 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
+[RequireComponent(typeof(HealthComponent))]
+[RequireComponent(typeof(LocomotionComponent))]
+[RequireComponent(typeof(WeaponComponent))]
 
-public class Character : Entity
+public abstract class Character : Entity
 {
-    [Header("Stats")]
-    protected float health;
-    protected float speed;
-
-    protected float currentHealth;
+    protected HealthComponent HC;
+    protected LocomotionComponent LC;
+    protected WeaponComponent WC;
 
     void Start() {
-        currentHealth = health;
+        HC = GetComponent<HealthComponent>();
+        LC = GetComponent<LocomotionComponent>();
+        WC = GetComponent<WeaponComponent>();
     }
-
-
 }
