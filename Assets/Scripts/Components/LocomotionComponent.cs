@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class LocomotionComponent : MonoBehaviour
 {
-    [SerializeField]
-    private float speed;
+    public float speed;
 
     public void Move(Vector3 direction) {
         transform.position += direction * speed * Time.deltaTime; 

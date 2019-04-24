@@ -2,15 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AIComponent))]
+
 public abstract class Enemy : Character
 {
-    public GameObject CurrentTarget { get { return currentTarget; } }
+    protected AIComponent AI = null;
 
-    [SerializeField]
-    protected float detectionDistance;
-    protected GameObject currentTarget = null;
+    void Start()
+    {
+        Initialize();
+    }
 
-    protected abstract void AssignNewTarget();
+    protected override void Initialize()
+    {
+        AI = GetComponent<AIComponent>();
+        base.Initialize();
+    }
 
     protected override void HealthComponent_OnHit()
     {

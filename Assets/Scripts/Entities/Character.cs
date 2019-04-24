@@ -2,14 +2,12 @@
 
 [RequireComponent(typeof(BoxCollider))]
 [RequireComponent(typeof(HealthComponent))]
-[RequireComponent(typeof(LocomotionComponent))]
 [RequireComponent(typeof(WeaponComponent))]
 [RequireComponent(typeof(Animator))]
 
 public abstract class Character : Entity
 {
     protected HealthComponent HC = null;
-    protected LocomotionComponent LC = null;
     protected WeaponComponent WC = null;
     protected Animator anim = null;
 
@@ -17,9 +15,8 @@ public abstract class Character : Entity
         Initialize();
     }
 
-    private void Initialize() {
+    protected virtual void Initialize() {
         HC = GetComponent<HealthComponent>();
-        LC = GetComponent<LocomotionComponent>();
         WC = GetComponent<WeaponComponent>();
         anim = GetComponent<Animator>();
 
@@ -30,4 +27,9 @@ public abstract class Character : Entity
     protected abstract void HealthComponent_OnHit();
     protected abstract void HealthComponent_OnDeath();
     protected abstract Vector3 MoveDirection();
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(transform.localPosition, transform.localPosition + transform.forward * 1.5f);
+    }
 }
