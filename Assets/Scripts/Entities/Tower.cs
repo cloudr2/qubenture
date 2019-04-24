@@ -2,17 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tower : MonoBehaviour
+[RequireComponent(typeof(HealthComponent))]
+
+public class Tower : Entity
 {
-    // Start is called before the first frame update
+    private HealthComponent HC = null;
+
     void Start()
     {
-        
+        Initialize();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Initialize()
     {
-        
+        HC = GetComponent<HealthComponent>();
+        HC.OnHit += TowerOnHit;
+        HC.OnDeath += TowerOnDeath;
+    }
+
+    private void TowerOnHit()
+    {
+        print("tower hit: " + HC.CurrentHealth + " HP left.");
+        //TODO: On hit animation
+    }
+
+    private void TowerOnDeath()
+    {
+        print("Tower destroyed.");
+        //TODO: Destroy animation
+        GameManager.instance.EndGame();
     }
 }
