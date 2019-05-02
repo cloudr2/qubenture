@@ -28,5 +28,4 @@ public abstract class Enemy : Character
     {
         //TODO: Play on Death animation;
     }
-
 }

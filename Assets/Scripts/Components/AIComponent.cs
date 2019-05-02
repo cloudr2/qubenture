@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(SphereCollider))]
 
 public class AIComponent : MonoBehaviour {
     
-    private float lastTime = 0;
+    private float lastAttackTime = 0;
+    private float lastTargetChange = 0;
     private Vector3 targetDirection;
+    private GameObject defaultTarget = null;
     private GameObject currentTarget = null;
     private List<GameObject> targetList = new List<GameObject>();
     private enum States {SEARCH, FOLLOW, ATTACK}
@@ -16,12 +19,14 @@ public class AIComponent : MonoBehaviour {
     public float awareness;
     public float attackRange;
     public float attackRate;
-    public GameObject defaultTarget;
+    public float damage;
     public LayerMask targetMask;
+    public NavMeshAgent agent;
 
     public Vector3 TargetDirectionNormalized { get { return targetDirection.normalized; } }
     public GameObject CurrentTarget { get { return currentTarget; } }
 
+    public event System.Action OnAttack = delegate () { };
 
     private void Start() {
         Initialize();
@@ -33,6 +38,11 @@ public class AIComponent : MonoBehaviour {
 
     private void Initialize() {
         currentState = States.SEARCH;
+    }
+
+    public void SetDefaultTarget(GameObject target)
+    {
+        defaultTarget = target;
     }
 
     private void VageFSM() {
@@ -48,10 +58,8 @@ public class AIComponent : MonoBehaviour {
         print(currentState);
     }
 
-
-    private void Search() {
-        transform.localPosition += transform.forward * speed * Time.deltaTime;
-        currentTarget = null;
+    private void Search()
+    {
         Collider[] hits = Physics.OverlapSphere(transform.localPosition, awareness, targetMask);
         if (hits.Length > 0)
         {
@@ -60,9 +68,22 @@ public class AIComponent : MonoBehaviour {
                 targetList.Insert(i, hits[i].gameObject);
             }
             currentTarget = targetList[0];
-            currentState = States.FOLLOW;
         }
-     }
+        else
+        {
+            currentTarget = defaultTarget;
+        }
+            currentState = States.FOLLOW;
+    }
+
+    private void CheckChangeTarget()
+    {
+        if(Random.Range(0,10) >= 8 && CanChangeTarget()) {
+            if (currentTarget != defaultTarget)
+                currentTarget = defaultTarget;
+                print("Changed target to: " + currentTarget);
+        }
+    }
 
     private void Follow()
     {
@@ -80,8 +101,10 @@ public class AIComponent : MonoBehaviour {
     {
         if (CanAttack() && currentTarget.GetComponent<HealthComponent>())
         {
-            currentTarget.GetComponent<HealthComponent>().TakeDamage(10); ;
-            print("Attakc!");
+            currentTarget.GetComponent<HealthComponent>().TakeDamage(damage); ;
+            print("Attack!");
+            OnAttack();
+            CheckChangeTarget();
         }
 
         LookAtTarget();
@@ -98,22 +121,38 @@ public class AIComponent : MonoBehaviour {
         if (CurrentTarget != null)
         {
             targetDirection = currentTarget.transform.localPosition - transform.localPosition;
+            targetDirection.y = 0;
             transform.forward = TargetDirectionNormalized;
         }
     }
 
     private bool CanAttack()
     {
-        if (Time.time >= lastTime + attackRate)
+        if (Time.time >= lastAttackTime + attackRate)
         {
-            lastTime = Time.time;
+            lastAttackTime = Time.time;
             return true;
         }
         else
             return false;
     }
 
+    private bool CanChangeTarget()
+    {
+        if (Time.time >= lastTargetChange + 1)
+        {
+            lastTargetChange = Time.time;
+            return true;
+        }
+        else
+            return false;
+    }
+
+
     private void OnDrawGizmos() {
+        Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.localPosition, awareness);
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.localPosition, attackRange);
     }
 }

@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class EnemyGround : Enemy
 {
+    protected override void Initialize()
+    {
+        base.Initialize();
+        AI.SetDefaultTarget(FindObjectOfType<Player>().gameObject);
+    }
+
     protected override void HealthComponent_OnHit()
     {
         base.HealthComponent_OnHit();
