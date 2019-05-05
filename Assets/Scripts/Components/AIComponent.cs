@@ -55,7 +55,7 @@ public class AIComponent : MonoBehaviour {
         else
             Search();
 
-        print(currentState);
+        //print(currentState);
     }
 
     private void Search()
@@ -99,10 +99,8 @@ public class AIComponent : MonoBehaviour {
 
     private void Attack()
     {
-        if (CanAttack() && currentTarget.GetComponent<HealthComponent>())
+        if (CanAttack())
         {
-            currentTarget.GetComponent<HealthComponent>().TakeDamage(damage); ;
-            print("Attack!");
             OnAttack();
             CheckChangeTarget();
         }
@@ -128,7 +126,10 @@ public class AIComponent : MonoBehaviour {
 
     private bool CanAttack()
     {
-        if (Time.time >= lastAttackTime + attackRate)
+        if (currentTarget == null) {
+            return false;
+        }
+        if (Time.time >= lastAttackTime + attackRate && currentTarget.GetComponent<HealthComponent>())
         {
             lastAttackTime = Time.time;
             return true;

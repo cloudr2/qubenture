@@ -3,20 +3,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StraightProyectile : MonoBehaviour
-{
-    float Velocity;
-    Vector3 Direction;
+public class StraightProyectile : MonoBehaviour {
+    float velocity;
+    Vector3 direction;
+    LayerMask collisionLayerMask;
 
-    public void Initialize(Vector3 origin, Vector3 destination, float time)
-    {
-        Velocity = Vector3.Distance(origin, destination) / time;
-        Direction = destination - origin;
-        Direction.Normalize();
+    public float damage = 10;
+    public float radius = 0.5f;
+
+    public void Initialize(Vector3 destination, float time, LayerMask collisionLayerMask) {
+        velocity = Vector3.Distance(transform.position, destination) / time;
+        direction = destination - transform.position;
+        direction.Normalize();
+        this.collisionLayerMask = collisionLayerMask;
     }
 
-    void Update()
-    {
-        transform.localPosition += Direction * Velocity * Time.deltaTime;
-    }   
+    void Update() {
+        transform.localPosition += direction * velocity * Time.deltaTime;
+        CheckCollision();
+    }
+
+    void CheckCollision() {
+        Collider[] hits = Physics.OverlapSphere(transform.localPosition, radius, collisionLayerMask);
+        for(int i = 0; i < hits.Length; i++) 
+        {
+            Collider hit = hits[i];
+            HealthComponent healthComponent = hit.GetComponent<HealthComponent>();
+            if (healthComponent == null)
+                continue;
+
+            DoDamage(healthComponent);
+            Destroy(this.gameObject);
+        }
+    }
+
+    void DoDamage(HealthComponent targetHit) {
+        targetHit.TakeDamage(damage);
+    }
 }

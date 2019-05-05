@@ -19,6 +19,8 @@ public abstract class Enemy : Character
         base.Initialize();
     }
 
+    protected abstract void AI_OnAttack();
+
     protected override void HealthComponent_OnHit()
     {
         //TODO: Play on hit animation;

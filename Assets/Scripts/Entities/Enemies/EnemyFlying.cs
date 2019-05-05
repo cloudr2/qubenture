@@ -14,13 +14,18 @@ public class EnemyFlying : Enemy
         AI.OnAttack += AI_OnAttack;
     }
 
-    private void AI_OnAttack()
+    protected override void AI_OnAttack()
     {
-        Vector3 Temp = AI.CurrentTarget.transform.position;
-        Temp.y -= 1;
-       StraightProyectile newBullet = Instantiate(projectylePrefab, Temp, Quaternion.identity).GetComponent<StraightProyectile>();
+       StraightProyectile newBullet = Instantiate(projectylePrefab, aim.position, Quaternion.identity).GetComponent<StraightProyectile>();
+       newBullet.Initialize(AI.CurrentTarget.transform.position, AI.attackRate, AI.targetMask);   
     }
 
+    protected void AI_OnAttack2()
+    {
+
+        // play on attack animtaion
+    }
+    
     protected override void HealthComponent_OnHit()
     {
         base.HealthComponent_OnHit();

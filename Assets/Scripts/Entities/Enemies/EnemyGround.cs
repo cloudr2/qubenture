@@ -24,4 +24,10 @@ public class EnemyGround : Enemy
     {
         return Vector3.zero;
     }
+
+    protected override void AI_OnAttack() {
+        AI.CurrentTarget.GetComponent<HealthComponent>().TakeDamage(AI.damage); ;
+        print(gameObject.name + " Attack!");
+        //Play on attack animation
+    }
 }
