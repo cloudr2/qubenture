@@ -2,7 +2,6 @@
 
 [RequireComponent(typeof(BoxCollider))]
 [RequireComponent(typeof(HealthComponent))]
-[RequireComponent(typeof(WeaponComponent))]
 [RequireComponent(typeof(Animator))]
 
 public abstract class Character : Entity

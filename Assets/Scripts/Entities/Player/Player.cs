@@ -7,6 +7,10 @@ using UnityEngine;
 public class Player : Character
 {
     private LocomotionComponent LC = null;
+    public float rotationSpeed;
+    public LayerMask targetMask;
+    public Transform aim;
+    public float attackRange;
 
     void Start()
     {
@@ -23,7 +27,11 @@ public class Player : Character
         base.Initialize();
     }
 
-protected override Vector3 MoveDirection() {
+    private void Attack() {
+        
+    }
+
+    protected override Vector3 MoveDirection() {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         return new Vector3(horizontal, 0, vertical);

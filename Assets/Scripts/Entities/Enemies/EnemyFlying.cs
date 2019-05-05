@@ -6,6 +6,7 @@ public class EnemyFlying : Enemy
 {
     public GameObject projectylePrefab;
     public Transform aim;
+    public float timeToHit;
 
     protected override void Initialize()
     {
@@ -17,7 +18,7 @@ public class EnemyFlying : Enemy
     protected override void AI_OnAttack()
     {
        StraightProyectile newBullet = Instantiate(projectylePrefab, aim.position, Quaternion.identity).GetComponent<StraightProyectile>();
-       newBullet.Initialize(AI.CurrentTarget.transform.position, AI.attackRate, AI.targetMask);   
+       newBullet.Initialize(AI.CurrentTarget.transform.position, timeToHit, AI.targetMask);   
     }
 
     protected void AI_OnAttack2()
