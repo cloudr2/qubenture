@@ -9,6 +9,9 @@ public abstract class Character : Entity
     protected HealthComponent HC = null;
     protected WeaponComponent WC = null;
     protected Animator anim = null;
+    [SerializeField]
+    protected float hitCD = 1f;
+    protected float lastHit;
 
     void Start() {
         Initialize();
@@ -30,5 +33,16 @@ public abstract class Character : Entity
     private void OnDrawGizmos()
     {
         Gizmos.DrawLine(transform.localPosition, transform.localPosition + transform.forward * 1.5f);
+    }
+
+    protected bool canBeHit()
+    {
+        if (Time.time >= lastHit + hitCD)
+        {
+            lastHit = Time.time;
+            return true;
+        }
+        else
+            return false;
     }
 }

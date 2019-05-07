@@ -20,12 +20,6 @@ public class EnemyFlying : Enemy
        StraightProyectile newBullet = Instantiate(projectylePrefab, aim.position, Quaternion.identity).GetComponent<StraightProyectile>();
        newBullet.Initialize(AI.CurrentTarget.transform.position, timeToHit, AI.targetMask);   
     }
-
-    protected void AI_OnAttack2()
-    {
-
-        // play on attack animtaion
-    }
     
     protected override void HealthComponent_OnHit()
     {

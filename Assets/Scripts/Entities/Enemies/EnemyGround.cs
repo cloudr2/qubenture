@@ -8,6 +8,7 @@ public class EnemyGround : Enemy
     {
         base.Initialize();
         AI.SetDefaultTarget(FindObjectOfType<Player>().gameObject);
+        AI.OnAttack += AI_OnAttack;
     }
 
     protected override void HealthComponent_OnHit()
@@ -27,7 +28,6 @@ public class EnemyGround : Enemy
 
     protected override void AI_OnAttack() {
         AI.CurrentTarget.GetComponent<HealthComponent>().TakeDamage(AI.damage); ;
-        print(gameObject.name + " Attack!");
         //Play on attack animation
     }
 }

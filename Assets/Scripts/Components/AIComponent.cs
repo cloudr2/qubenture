@@ -21,7 +21,6 @@ public class AIComponent : MonoBehaviour {
     public float attackRate;
     public float damage;
     public LayerMask targetMask;
-    public NavMeshAgent agent;
 
     public Vector3 TargetDirectionNormalized { get { return targetDirection.normalized; } }
     public GameObject CurrentTarget { get { return currentTarget; } }
@@ -34,6 +33,7 @@ public class AIComponent : MonoBehaviour {
 
     private void Update() {
         VageFSM();
+        LookAtTarget();
     }
 
     private void Initialize() {
@@ -54,13 +54,12 @@ public class AIComponent : MonoBehaviour {
             Attack();
         else
             Search();
-
-        //print(currentState);
     }
 
     private void Search()
     {
-        Collider[] hits = Physics.OverlapSphere(transform.localPosition, awareness, targetMask);
+        Collider[] hits = Physics.OverlapSphere(transform.position, awareness, targetMask);
+        
         if (hits.Length > 0)
         {
             for (int i = 0; i < hits.Length; i++)
@@ -80,15 +79,16 @@ public class AIComponent : MonoBehaviour {
     {
         if(Random.Range(0,10) >= 8 && CanChangeTarget()) {
             if (currentTarget != defaultTarget)
+            {
                 currentTarget = defaultTarget;
-                print("Changed target to: " + currentTarget);
+                Search();
+            }
         }
     }
 
     private void Follow()
     {
-        LookAtTarget();
-        transform.localPosition += TargetDirectionNormalized * speed * Time.deltaTime;
+        transform.position += TargetDirectionNormalized * speed * Time.deltaTime;
         if (targetDirection.magnitude <= attackRange)
             currentState = States.ATTACK;
         else if (targetDirection.magnitude > awareness)
@@ -105,7 +105,6 @@ public class AIComponent : MonoBehaviour {
             CheckChangeTarget();
         }
 
-        LookAtTarget();
         if (targetDirection.magnitude > attackRange)
             currentState = States.FOLLOW;
         else if (targetDirection.magnitude > awareness)
@@ -118,7 +117,7 @@ public class AIComponent : MonoBehaviour {
     {
         if (CurrentTarget != null)
         {
-            targetDirection = currentTarget.transform.localPosition - transform.localPosition;
+            targetDirection = currentTarget.transform.position - transform.position;
             targetDirection.y = 0;
             transform.forward = TargetDirectionNormalized;
         }
@@ -152,8 +151,8 @@ public class AIComponent : MonoBehaviour {
 
     private void OnDrawGizmos() {
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.localPosition, awareness);
+        Gizmos.DrawWireSphere(transform.position, awareness);
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.localPosition, attackRange);
+        Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 }

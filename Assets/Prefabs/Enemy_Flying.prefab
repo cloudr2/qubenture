@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 6390404649208705278}
   - component: {fileID: 6890773124107044443}
   - component: {fileID: 6917835969501104855}
-  - component: {fileID: 2341152428437814448}
   - component: {fileID: 2793570993898404409}
   - component: {fileID: 5880989071085612889}
   - component: {fileID: 6788894541770107839}
@@ -134,7 +133,6 @@ MonoBehaviour:
   targetMask:
     serializedVersion: 2
     m_Bits: 2560
-  agent: {fileID: 0}
 --- !u!65 &6890773124107044443
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -161,19 +159,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
---- !u!114 &2341152428437814448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5363076714862426085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d76857ce6f7b5543a7d73c2db5aab84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myWeapon: {fileID: 0}
 --- !u!95 &2793570993898404409
 Animator:
   serializedVersion: 3
@@ -208,6 +193,7 @@ MonoBehaviour:
   projectylePrefab: {fileID: 4519826284795182444, guid: 1ed53e26bb9b02242bbd04e162ca3456,
     type: 3}
   aim: {fileID: 5283302021668706047}
+  timeToHit: 0
 --- !u!195 &6788894541770107839
 NavMeshAgent:
   m_ObjectHideFlags: 0

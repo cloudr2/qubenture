@@ -16,6 +16,7 @@ public class StraightProyectile : MonoBehaviour {
         direction = destination - transform.position;
         direction.Normalize();
         this.collisionLayerMask = collisionLayerMask;
+        Destroy(this.gameObject,2f);
     }
 
     void Update() {

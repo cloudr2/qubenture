@@ -23,11 +23,17 @@ public abstract class Enemy : Character
 
     protected override void HealthComponent_OnHit()
     {
-        //TODO: Play on hit animation;
+
+        if (canBeHit())
+        {
+            print("Enemy hit: " + HC.CurrentHealth + " HP left.");
+            //TODO: Play on hit animation;
+        }
     }
 
     protected override void HealthComponent_OnDeath()
     {
         //TODO: Play on Death animation;
+        gameObject.SetActive(false);
     }
 }
