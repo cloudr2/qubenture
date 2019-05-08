@@ -14,6 +14,7 @@ public class EnemyGround : Enemy
     protected override void HealthComponent_OnHit()
     {
         base.HealthComponent_OnHit();
+        anim.SetTrigger("OnHit");
     }
 
     protected override void HealthComponent_OnDeath()
@@ -23,11 +24,12 @@ public class EnemyGround : Enemy
 
     protected override Vector3 MoveDirection()
     {
+        anim.SetFloat("Speed", Mathf.Lerp(0, 1, AI.TargetDirectionNormalized.magnitude));
         return Vector3.zero;
     }
 
     protected override void AI_OnAttack() {
         AI.CurrentTarget.GetComponent<HealthComponent>().TakeDamage(AI.damage); ;
-        //Play on attack animation
+        anim.SetTrigger("Attack");
     }
 }

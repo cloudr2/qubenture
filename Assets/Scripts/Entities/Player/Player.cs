@@ -2,30 +2,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(LocomotionComponent))]
 
 public class Player : Character
 {
-    private LocomotionComponent LC = null;
-    public float rotationSpeed;
     public LayerMask targetMask;
     public Transform aim;
     public float meeleRange;
     public float meeleCooldown;
     public float rangedCooldown;
     public float damage;
+    public float speed;
+    public Slider hpBar;
 
     private float lastMeele;
     private float lastRanged;
 
-    void Start()
-    {
-        Initialize();
-    }
 
     void Update() {
-        LC.Move(MoveDirection());
+        Move(MoveDirection());
         FollowMouse();
         Attack();
     }
@@ -42,23 +39,22 @@ public class Player : Character
             }
     }
 
-    protected override void Initialize()
+    public void Move(Vector3 direction)
     {
-        LC = GetComponent<LocomotionComponent>();
-        base.Initialize();
+        transform.position += direction * speed * Time.deltaTime;
+        anim.SetFloat("Speed",Mathf.Lerp(0,1,MoveDirection().magnitude));
     }
 
     private void Attack() {
-        //attack animation
         if (Input.GetMouseButtonDown(0) && canUseMeele())
         {
+            anim.SetTrigger("Attack");
             Collider[] targets = Physics.OverlapSphere(aim.position,meeleRange,targetMask);
             if (targets.Length > 0)
             {
                 foreach (var target in targets)
                 {
                     target.GetComponent<HealthComponent>().TakeDamage(damage);
-                    print("attack!");
                 }
             }
         }
@@ -95,7 +91,7 @@ public class Player : Character
     protected override void HealthComponent_OnDeath()
     {
         print("Player destroyed.");
-        GameManager.instance.EndGame();
+        GameManager.instance.EndGame("Lose");
         //TODO: Dead animation
     }
 
@@ -103,8 +99,9 @@ public class Player : Character
     {
         if (canBeHit())
         {
-            print("player hit: " + HC.CurrentHealth + " HP left.");
-            //TODO: on hit animation
+            FxManager.instance.PlayFx(FxManager.instance.playerHitFx,transform.position);
+            hpBar.value = (HC.CurrentHealth / HC.MaxHealth);
+            anim.SetTrigger("OnHit");
         }
     }
 

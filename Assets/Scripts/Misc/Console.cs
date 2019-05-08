@@ -25,28 +25,16 @@ public class Console : MonoBehaviour {
             instance = this;
 
         RegisterCommand("help", Help, "Show all commands.");
-        RegisterCommand("endgame", Endgame, "Win the stage.");
-        RegisterCommand("aggro", Aggro, "All enemies targets player.");
         RegisterCommand("clear", ClearConsole, "Clear console log.");
-        RegisterCommandWithParams("godmode", GodMode, "Player is invulnerable.");
 
         ClearConsole();
     }
 
-    private void Endgame() {
-    }
-
-    private void GodMode(string arg) {
-        if (arg == "" || arg == null)
-            Write("Error: Godmode must receive params 'on' or 'off'.");
-        else if (arg == "off")
-            Write("godmode: off");
-        else if (arg == "on")
-            Write("godmode: on");
-        else
-            Write("the argument " + arg + " is not valid.");
-    }
-    private void Aggro() {
+    private void Start()
+    {
+        RegisterCommand("aggro", GameManager.instance.Aggro, "All enemies targets player.");
+        RegisterCommand("endgame", GameManager.instance.DestroyEnemies, "Destroy all enemies.");
+        RegisterCommandWithParams("godmode", GameManager.instance.GodMode, "Player is invulnerable.");
     }
 
     private void ClearConsole() {
@@ -97,7 +85,7 @@ public class Console : MonoBehaviour {
         commandDescriptions.Add(commandName, description);
     }
 
-    private void Write(string txt) {
+    public void Write(string txt) {
         output.text += ">" + txt + "\n";
     }
 

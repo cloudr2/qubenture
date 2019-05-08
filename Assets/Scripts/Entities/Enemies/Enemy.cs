@@ -26,14 +26,13 @@ public abstract class Enemy : Character
 
         if (canBeHit())
         {
-            print("Enemy hit: " + HC.CurrentHealth + " HP left.");
-            //TODO: Play on hit animation;
+            FxManager.instance.PlayFx(FxManager.instance.enemyHitFx, transform.position);
         }
     }
 
     protected override void HealthComponent_OnDeath()
     {
-        //TODO: Play on Death animation;
         gameObject.SetActive(false);
+        GameManager.instance.CheckEnemiesAlive();
     }
 }

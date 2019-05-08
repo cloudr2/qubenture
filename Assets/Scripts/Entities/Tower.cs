@@ -72,7 +72,7 @@ public class Tower : Entity
     {
         print("Tower destroyed.");
         //TODO: Destroy animation
-        GameManager.instance.EndGame();
+        GameManager.instance.EndGame("Lose");
     }
 
     private bool CanAttack()
