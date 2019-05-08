@@ -15,6 +15,8 @@ public class Tower : Entity
     public LayerMask targetMask;
     public float timeToHit;
 
+    private List<GameObject> targetList = new List<GameObject>();
+
     private float lastAttackTime = 0;
 
     void Start()
@@ -36,19 +38,17 @@ public class Tower : Entity
 
     private void Target()
     {
-        if (currentTarget == null)
+        Collider[] targets = Physics.OverlapSphere(transform.position, attackRange / 2, targetMask);
+        if (targets.Length > 0)
         {
-            Collider[] targets = Physics.OverlapSphere(transform.position, attackRange / 2, targetMask);
-            if (targets.Length > 0)
+            if (targets[0].GetComponent<HealthComponent>())
             {
-                if (targets[0].GetComponent<HealthComponent>())
-                {
-                    currentTarget = targets[0].gameObject;
-                }
+                targetList.Insert(0, targets[0].gameObject);
+                currentTarget = targetList[0];
             }
-            else
-                currentTarget = null;
         }
+        else
+            currentTarget = null;
     }
 
     private void Attack()
@@ -58,8 +58,8 @@ public class Tower : Entity
             StraightProyectile newBullet = Instantiate(shootPrefab, aim.position, Quaternion.identity).GetComponent<StraightProyectile>();
             newBullet.Initialize(currentTarget.transform.position, timeToHit, targetMask);
         }
-        else
-            Target();
+        
+        Target();
     }
 
     private void TowerOnHit()
@@ -72,7 +72,7 @@ public class Tower : Entity
     {
         print("Tower destroyed.");
         //TODO: Destroy animation
-        GameManager.instance.EndGame();
+        GameManager.instance.EndGame("Lose");
     }
 
     private bool CanAttack()

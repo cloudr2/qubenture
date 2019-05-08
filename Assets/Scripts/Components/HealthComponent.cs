@@ -8,8 +8,12 @@ public class HealthComponent : MonoBehaviour, IHitteable
     private float currentHealth;
 
     public float CurrentHealth { get { return currentHealth; } }
+    public float MaxHealth { get { return maxHealth; } }
+
     public event Action OnDeath = delegate () { };
     public event Action OnHit = delegate () { };
+
+    public bool isInvincible { get; set; }
 
     void Start() {
         Initialize();
@@ -18,12 +22,16 @@ public class HealthComponent : MonoBehaviour, IHitteable
     private void Initialize()
     {
         currentHealth = maxHealth;
+        isInvincible = false;
     }
 
     public void TakeDamage(float damage) {
-        currentHealth -= damage;
-        OnHit();
-        CheckHealth();
+        if (!isInvincible)
+        {
+            currentHealth -= damage;
+            OnHit();
+            CheckHealth();
+        }
     }
 
     public void RegainHealth(float heal) {

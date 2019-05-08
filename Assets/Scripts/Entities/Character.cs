@@ -2,7 +2,6 @@
 
 [RequireComponent(typeof(BoxCollider))]
 [RequireComponent(typeof(HealthComponent))]
-[RequireComponent(typeof(Animator))]
 
 public abstract class Character : Entity
 {
@@ -20,7 +19,7 @@ public abstract class Character : Entity
     protected virtual void Initialize() {
         HC = GetComponent<HealthComponent>();
         WC = GetComponent<WeaponComponent>();
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
 
         HC.OnHit += HealthComponent_OnHit;
         HC.OnDeath += HealthComponent_OnDeath;

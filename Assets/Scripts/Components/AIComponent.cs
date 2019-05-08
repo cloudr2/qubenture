@@ -2,8 +2,6 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(SphereCollider))]
-
 public class AIComponent : MonoBehaviour {
     
     private float lastAttackTime = 0;
@@ -148,6 +146,11 @@ public class AIComponent : MonoBehaviour {
             return false;
     }
 
+    public void ForceTargetPlayer()
+    {
+        defaultTarget = FindObjectOfType<Player>().gameObject;
+        currentTarget = defaultTarget;
+    }
 
     private void OnDrawGizmos() {
         Gizmos.color = Color.blue;
