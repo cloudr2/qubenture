@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1145059467860355452}
   - component: {fileID: 1145059467860355453}
-  - component: {fileID: 1145059467860355454}
   - component: {fileID: 1145059467860355442}
   - component: {fileID: 1145059467860355443}
   - component: {fileID: 1145059467860355440}
@@ -46,25 +45,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1145059467860355448}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!95 &1145059467860355454
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1145059467860355448}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!65 &1145059467860355442
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -92,9 +72,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   awareness: 10
-  attackRange: 3
+  attackRange: 2.5
   attackRate: 1
-  damage: 12
+  damage: 7
   targetMask:
     serializedVersion: 2
     m_Bits: 2560
@@ -232,28 +212,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 5f0e123b686dec8498d5385e0cd8b4d6, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 5f0e123b686dec8498d5385e0cd8b4d6, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 5f0e123b686dec8498d5385e0cd8b4d6, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: 5f0e123b686dec8498d5385e0cd8b4d6, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 9d4696fa32011754fbe22b1b4462a1f2, type: 2}
     - target: {fileID: 9500000, guid: 5f0e123b686dec8498d5385e0cd8b4d6, type: 3}
       propertyPath: m_CullingMode
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9500000, guid: 5f0e123b686dec8498d5385e0cd8b4d6, type: 3}
-      propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

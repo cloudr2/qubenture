@@ -6,7 +6,6 @@
 public abstract class Character : Entity
 {
     protected HealthComponent HC = null;
-    protected WeaponComponent WC = null;
     protected Animator anim = null;
     [SerializeField]
     protected float hitCD = 1f;
@@ -18,7 +17,6 @@ public abstract class Character : Entity
 
     protected virtual void Initialize() {
         HC = GetComponent<HealthComponent>();
-        WC = GetComponent<WeaponComponent>();
         anim = GetComponentInChildren<Animator>();
 
         HC.OnHit += HealthComponent_OnHit;

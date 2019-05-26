@@ -15,7 +15,10 @@ public class Tower : Entity
     public LayerMask targetMask;
     public float timeToHit;
 
+    private MeshRenderer MR;
     private List<GameObject> targetList = new List<GameObject>();
+    private Material normal;
+    public Material onHit;
 
     private float lastAttackTime = 0;
 
@@ -31,6 +34,8 @@ public class Tower : Entity
 
     private void Initialize()
     {
+        MR = GetComponentInChildren<MeshRenderer>();
+        normal = MR.material;
         HC = GetComponent<HealthComponent>();
         HC.OnHit += TowerOnHit;
         HC.OnDeath += TowerOnDeath;
@@ -64,15 +69,18 @@ public class Tower : Entity
 
     private void TowerOnHit()
     {
-        print("tower hit: " + HC.CurrentHealth + " HP left.");
-        //TODO: On hit animation
+        StartCoroutine(OnHitFX());
+    }
+
+    private IEnumerator OnHitFX() {
+        MR.material = onHit;
+        yield return new WaitForSeconds(3);
+        MR.material = normal;
     }
 
     private void TowerOnDeath()
     {
-        print("Tower destroyed.");
-        //TODO: Destroy animation
-        GameManager.instance.EndGame("Lose");
+        GameManager.instance.EndGame("LOSE");
     }
 
     private bool CanAttack()
