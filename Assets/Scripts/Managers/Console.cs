@@ -46,16 +46,19 @@ public class Console : MonoBehaviour {
         if (consolePrefab.activeSelf) {
             ClearConsole();
             input.Select();
+            Time.timeScale = 0f;
+            if (UIManager.instance.uIPanel.activeSelf)
+                Write("hola Hugo esto es un Easter Egg.");
         }
+        else
+            Time.timeScale = 1f;
     }
 
     void Update() {
         if (Input.GetKeyDown(openConsole)) {
             TriggerConsole();
         }
-
         if (consolePrefab.activeSelf) {
-            Time.timeScale = 0f;
             if (Input.GetKeyDown(KeyCode.Return) && input.text != "") {
                 Write(input.text);
                 string[] splitText = input.text.Split(' ');
@@ -70,9 +73,7 @@ public class Console : MonoBehaviour {
                 input.text = "";
                 input.Select();
             }
-        }
-        else
-            Time.timeScale = 1f;           
+        }       
     }
 
     public void RegisterCommand(string commandName, FunctionPrototype command, string description) {

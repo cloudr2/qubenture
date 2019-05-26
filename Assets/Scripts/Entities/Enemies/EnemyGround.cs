@@ -24,12 +24,11 @@ public class EnemyGround : Enemy
 
     protected override Vector3 MoveDirection()
     {
-        anim.SetFloat("Speed", Mathf.Lerp(0, 1, AI.TargetDirectionNormalized.magnitude));
         return Vector3.zero;
     }
 
     protected override void AI_OnAttack() {
-        AI.CurrentTarget.GetComponent<HealthComponent>().TakeDamage(AI.damage); ;
         anim.SetTrigger("Attack");
+        AI.CurrentTarget.GetComponent<HealthComponent>().TakeDamage(AI.damage); ;
     }
 }

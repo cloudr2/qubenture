@@ -7,6 +7,7 @@ public class FxManager : MonoBehaviour
     public static FxManager instance = null;
     public GameObject playerHitFx;
     public GameObject enemyHitFx;
+    public GameObject sparkleFx;
 
     void Awake()
     {

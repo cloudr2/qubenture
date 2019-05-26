@@ -14,6 +14,7 @@ public class HealthComponent : MonoBehaviour, IHitteable
     public event Action OnHit = delegate () { };
 
     public bool isInvincible { get; set; }
+    public bool isAlive { get { return currentHealth > 0 ? true : false; }  }
 
     void Start() {
         Initialize();

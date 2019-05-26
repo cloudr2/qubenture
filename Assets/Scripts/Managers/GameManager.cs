@@ -7,8 +7,16 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance = null;
-    private Enemy[] enemies = null;
+
+    [HideInInspector]
     public Player player = null;
+
+    public GameObject bossPrefab;
+
+    private int currentScene;
+    private Enemy[] enemies = null;
+    private Transform bossHolder;
+    private bool bossSpawned = false;
 
     void Awake()
     {
@@ -20,6 +28,11 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.F1))
+            Restart();
+    }
+
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -27,46 +40,41 @@ public class GameManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Time.timeScale = 1f;
         player = FindObjectOfType<Player>();
-        CheckEnemiesAlive();
+        bossSpawned = false;
     }
 
     public void EndGame(string state)
     {
-        if (state == "Win")
-        {
-            Win();
-        } else {
-            Lose();
-        }
+        Time.timeScale = 0f;
+        UIManager.instance.ShowResultScreen(true);
+        UIManager.instance.SetResultText(state);
     }
 
-    private void Lose()
+    public void LoadLevel(int sceneIndex)
     {
-        print("You Lose");
+        SceneManager.LoadScene(sceneIndex, LoadSceneMode.Single);
     }
 
-    private void Win()
+    public void LoadLevel(string sceneName)
     {
-        print("You Win");
-    }
-
-    public void LoadLevel(int sceneIndex, LoadSceneMode sceneMode)
-    {
-        SceneManager.LoadScene(sceneIndex, sceneMode);
-    }
-
-    public void LoadLevel(string sceneName, LoadSceneMode sceneMode)
-    {
-        SceneManager.LoadScene(sceneName, sceneMode);
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
     public void CheckEnemiesAlive()
     {
+        bossHolder = GameObject.Find("BossHolder").transform;
         enemies = FindObjectsOfType<Enemy>();
         if (enemies.Length <= 0)
         {
-            EndGame("Win");
+            if (!bossSpawned) {
+                GameObject boss = Instantiate(bossPrefab, bossHolder.position, Quaternion.identity).gameObject;
+                boss.transform.parent = bossHolder.transform;
+                bossSpawned = true;
+            }
+            else
+                EndGame("WIN");
         }
         print("Current amount of enemies: " + enemies.Length);
     }
@@ -99,9 +107,8 @@ public class GameManager : MonoBehaviour
             print("No enemies left");
     }
 
-    public void Start()
-    {
-        LoadLevel("Stage01", LoadSceneMode.Single);
+    public void Restart() {
+        LoadLevel("Stage01");
     }
 
     public void GodMode(string arg)
