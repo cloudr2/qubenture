@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(HealthComponent))]
 
-public class Tower : Entity
+public class Tower : Entity, IUpdateable
 {
     private HealthComponent HC = null;
     private GameObject currentTarget = null;
@@ -22,12 +22,20 @@ public class Tower : Entity
 
     private float lastAttackTime = 0;
 
+    public void OnEnable() {
+        UpdateManager.Register(this);
+    }
+
+    public void OnDisable() {
+        UpdateManager.Unregister(this);
+    }
+
     void Start()
     {
         Initialize();
     }
 
-    void Update()
+    public void CustomUpdate()
     {
         Attack();
     }
@@ -102,5 +110,9 @@ public class Tower : Entity
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
+
+    public void CustomLateUpdate() {
+        return;
     }
 }

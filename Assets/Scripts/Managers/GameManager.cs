@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour, IUpdateable
 {
     public static GameManager instance = null;
 
@@ -18,8 +18,8 @@ public class GameManager : MonoBehaviour
     private Transform bossHolder;
     private bool bossSpawned = false;
 
-    void Awake()
-    {
+    #region Singleton
+    void Awake() {
         if (instance != null)
             Destroy(gameObject);
         else
@@ -27,15 +27,20 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
     }
+    #endregion
 
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.F1))
-            Restart();
+    public void OnDisable() {
+        UpdateManager.Unregister(this);
     }
 
-    private void OnEnable()
-    {
+    private void OnEnable() {
+        UpdateManager.Register(this);
         SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    public void CustomUpdate() {
+        if (Input.GetKeyDown(KeyCode.F1))
+            Restart();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -130,5 +135,9 @@ public class GameManager : MonoBehaviour
             else
                 Console.instance.Write("the argument " + arg + " is not valid.");
         }
+    }
+
+    public void CustomLateUpdate() {
+        return;
     }
 }

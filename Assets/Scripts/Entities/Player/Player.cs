@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 [RequireComponent(typeof(LocomotionComponent))]
 
-public class Player : Character
+public class Player : Character, IUpdateable
 {
     [Header("Stats")]
     public float damage;
@@ -29,11 +29,19 @@ public class Player : Character
     private float lastRanged;
     private bool rangedAnimationFinished = true;
 
-    void Update() {
+    public void OnEnable() {
+        UpdateManager.Register(this);
+    }
+
+    public void OnDisable() {
+        UpdateManager.Unregister(this);
+    }
+
+    public void CustomUpdate() {
         Move(MoveDirection());
         FollowMouse();
         Attack();
-        ThrowGrenade ();
+        ThrowGrenade();
     }
 
     private void FollowMouse()
@@ -157,5 +165,9 @@ public class Player : Character
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(aim.position, meeleRange);
+    }
+
+    public void CustomLateUpdate() {
+        return;
     }
 }

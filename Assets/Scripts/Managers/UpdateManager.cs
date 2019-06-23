@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public interface IUpdateable
+public interface IUpdateable //TODO: quizas hacer una interfaz para cada tipo de update.
 {
     void CustomUpdate();
+    void CustomLateUpdate();
 }
 
 public class UpdateManager : MonoBehaviour
@@ -46,6 +47,12 @@ public class UpdateManager : MonoBehaviour
         for (int i = 0; i < updateableObjects.Count; i++)
         {
             updateableObjects[i].CustomUpdate();
+        }
+    }
+
+    void LateUpdate() {
+        for (int i = 0; i < updateableObjects.Count; i++) {
+            updateableObjects[i].CustomLateUpdate();
         }
     }
 }

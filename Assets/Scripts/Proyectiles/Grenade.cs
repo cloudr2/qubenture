@@ -3,13 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grenade : MonoBehaviour {
+public class Grenade : MonoBehaviour, IUpdateable {
     public float detectionRadius;
     public LayerMask targetMask {get; set;}
     public float damage;
     public GameObject explosionFX;
 
-    void Update() {
+    public void OnEnable() {
+        UpdateManager.Register(this);
+    }
+
+    public void OnDisable() {
+        UpdateManager.Unregister(this);
+    }
+
+    public void CustomUpdate() {
         Detonate();
     }
 
@@ -28,5 +36,9 @@ public class Grenade : MonoBehaviour {
     private void OnDrawGizmos() {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position,detectionRadius);
+    }
+
+    public void CustomLateUpdate() {
+        return;
     }
 }

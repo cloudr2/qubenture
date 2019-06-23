@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Console : MonoBehaviour {
+public class Console : MonoBehaviour, IUpdateable {
 
     public delegate void FunctionPrototype();
     public delegate void FunctionPrototypeParams(string args);
@@ -17,6 +17,14 @@ public class Console : MonoBehaviour {
     public Dictionary<string, string> commandDescriptions = new Dictionary<string, string>();
     public Dictionary<string, FunctionPrototype> commandDictionary = new Dictionary<string, FunctionPrototype>();
     public Dictionary<string, FunctionPrototypeParams> commandParamsDictionary = new Dictionary<string, FunctionPrototypeParams>();
+
+    public void OnEnable() {
+        UpdateManager.Register(this);
+    }
+
+    public void OnDisable() {
+        UpdateManager.Unregister(this);
+    }
 
     private void Awake() {
         if (instance != null)
@@ -54,7 +62,7 @@ public class Console : MonoBehaviour {
             Time.timeScale = 1f;
     }
 
-    void Update() {
+    public void CustomUpdate() {
         if (Input.GetKeyDown(openConsole)) {
             TriggerConsole();
         }
@@ -94,5 +102,9 @@ public class Console : MonoBehaviour {
         foreach (var dictionaryItem in commandDescriptions) {
             Write(dictionaryItem.Key + ": " + dictionaryItem.Value);
         }
+    }
+
+    public void CustomLateUpdate() {
+        return;
     }
 }

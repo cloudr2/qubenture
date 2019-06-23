@@ -3,13 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StraightProyectile : MonoBehaviour {
+public class StraightProyectile : MonoBehaviour, IUpdateable {
     float velocity;
     Vector3 direction;
     LayerMask collisionLayerMask;
 
     public float damage = 10;
     public float radius = 0.5f;
+
+    public void OnEnable() {
+        UpdateManager.Register(this);
+    }
+
+    public void OnDisable() {
+        UpdateManager.Unregister(this);
+    }
 
     public void Initialize(Vector3 destination, float time, LayerMask collisionLayerMask) {
         velocity = Vector3.Distance(transform.position, destination) / time;
@@ -19,7 +27,7 @@ public class StraightProyectile : MonoBehaviour {
         Destroy(this.gameObject,2f);
     }
 
-    void Update() {
+    public void CustomUpdate() {
         transform.localPosition += direction * velocity * Time.deltaTime;
         CheckCollision();
     }
@@ -40,5 +48,9 @@ public class StraightProyectile : MonoBehaviour {
 
     void DoDamage(HealthComponent targetHit) {
         targetHit.TakeDamage(damage);
+    }
+
+    public void CustomLateUpdate() {
+        return;
     }
 }

@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AIComponent : MonoBehaviour {
+public class AIComponent : MonoBehaviour, IUpdateable {
     
     private float lastAttackTime = 0;
     private float lastTargetChange = 0;
@@ -25,11 +25,19 @@ public class AIComponent : MonoBehaviour {
 
     public event System.Action OnAttack = delegate () { };
 
+    public void OnEnable() {
+        UpdateManager.Register(this);
+    }
+
+    public void OnDisable() {
+        UpdateManager.Unregister(this);
+    }
+
     private void Start() {
         Initialize();
     }
 
-    private void Update() {
+    public void CustomUpdate() {
         VageFSM();
         LookAtTarget();
     }
@@ -157,5 +165,9 @@ public class AIComponent : MonoBehaviour {
         Gizmos.DrawWireSphere(transform.position, awareness);
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
+
+    public void CustomLateUpdate() {
+        return;
     }
 }
