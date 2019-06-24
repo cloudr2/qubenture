@@ -9,6 +9,8 @@ public class UIManager : MonoBehaviour
     public Canvas uICanvas;
     public GameObject uIPanel;
     public Text resultText;
+    public UIButton attackButton;
+    public UIButton grenadeButton;
 
     void Awake() {
         if (instance != null)

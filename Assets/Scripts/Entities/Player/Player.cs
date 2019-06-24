@@ -28,6 +28,8 @@ public class Player : Character, IUpdateable
     private float lastMeele;
     private float lastRanged;
     private bool rangedAnimationFinished = true;
+    private VirtualJoystick VJ;
+    private Vector3 forward, right;
 
     public void OnEnable() {
         UpdateManager.Register(this);
@@ -37,9 +39,17 @@ public class Player : Character, IUpdateable
         UpdateManager.Unregister(this);
     }
 
+    void Awake() {
+        VJ = FindObjectOfType<VirtualJoystick>();
+        forward = Camera.main.transform.forward;
+        forward.y = 0;
+        forward = Vector3.Normalize(forward);
+        right = Quaternion.Euler(new Vector3(0, 90, 0)) * forward;
+    }
+
     public void CustomUpdate() {
         Move(MoveDirection());
-        FollowMouse();
+        //FollowMouse();
         Attack();
         ThrowGrenade();
     }
@@ -63,7 +73,7 @@ public class Player : Character, IUpdateable
     }
 
     private void ThrowGrenade() {
-        if (Input.GetMouseButtonDown(1) && canUseGrenade()) {
+        if (UIManager.instance.grenadeButton.IsPressed && canUseGrenade()) {
             GameObject newGrenade = Instantiate(grenadePrefab, aim.position,Quaternion.identity).gameObject;
             newGrenade.GetComponent<Grenade>().targetMask = this.targetMask;
             if (newGrenade)
@@ -102,7 +112,7 @@ public class Player : Character, IUpdateable
     }
 
     private void Attack() {
-        if (Input.GetMouseButtonDown(0) && canUseMeele())
+        if (UIManager.instance.attackButton.IsPressed && canUseMeele())
         {
             anim.SetTrigger("Attack");
             Collider[] targets = Physics.OverlapSphere(aim.position,meeleRange,targetMask);
@@ -139,9 +149,16 @@ public class Player : Character, IUpdateable
     }
 
     protected override Vector3 MoveDirection() {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-        return new Vector3(horizontal, 0, vertical);
+        float horizontal = VJ.VJHorizontalAxis();
+        float vertical = VJ.VJVerticalAxis();
+        Vector3 rightMovement = right * horizontal;
+        Vector3 upMovement = forward * vertical;
+        Vector3 towardsDir = Vector3.Normalize(rightMovement + upMovement);
+
+        if (towardsDir != Vector3.zero) {
+            transform.forward = towardsDir;
+        }
+        return towardsDir;
     }
 
     protected override void HealthComponent_OnDeath()
