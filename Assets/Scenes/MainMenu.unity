@@ -799,14 +799,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4646819790680558181, guid: ffd3adc79892d2b4cb4282b263933a74,
           type: 3}
-        m_MethodName: LoadLevel
-        m_Mode: 5
+        m_MethodName: NextLevel
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Stage01
+          m_StringArgument: Stage02
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
