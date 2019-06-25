@@ -17,8 +17,9 @@ public class EnemyFlying : Enemy
 
     protected override void AI_OnAttack()
     {
-       StraightProyectile newBullet = Instantiate(projectylePrefab, aim.position, Quaternion.identity).GetComponent<StraightProyectile>();
-       newBullet.Initialize(AI.CurrentTarget.transform.position, timeToHit, AI.targetMask);   
+        //StraightProyectile newBullet = Instantiate(projectylePrefab, aim.position, Quaternion.identity).GetComponent<StraightProyectile>();
+        StraightProyectile newBullet = PoolManager.Instance.SpawnFromPool("fireball", aim.position, Quaternion.identity).GetComponent<StraightProyectile>();
+        newBullet.Initialize(AI.CurrentTarget.transform.position, timeToHit, AI.targetMask);   
     }
     
     protected override void HealthComponent_OnHit()

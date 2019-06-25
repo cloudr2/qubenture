@@ -173,7 +173,9 @@ public class Player : Character, IUpdateable
         hpBar.value = (HC.CurrentHealth / HC.MaxHealth);
         if (canBeHit())
         {
-            FxManager.instance.PlayFx(FxManager.instance.playerHitFx,transform.position);
+            //FxManager.instance.PlayFx(FxManager.instance.playerHitFx,transform.position);
+            PoolManager.Instance.SpawnFromPool("playerHitVFX", transform.position, Quaternion.identity);
+
             anim.SetTrigger("OnHit");
         }
     }

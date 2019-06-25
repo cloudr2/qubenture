@@ -68,7 +68,7 @@ public class Tower : Entity, IUpdateable
     {
         if (CanAttack())
         {
-            StraightProyectile newBullet = Instantiate(shootPrefab, aim.position, Quaternion.identity).GetComponent<StraightProyectile>();
+            StraightProyectile newBullet = PoolManager.Instance.SpawnFromPool("fireball", aim.position, Quaternion.identity).GetComponent<StraightProyectile>();
             newBullet.Initialize(currentTarget.transform.position, timeToHit, targetMask);
         }
         

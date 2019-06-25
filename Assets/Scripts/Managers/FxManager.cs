@@ -7,7 +7,6 @@ public class FxManager : MonoBehaviour
     public static FxManager instance = null;
     public GameObject playerHitFx;
     public GameObject enemyHitFx;
-    public GameObject sparkleFx;
 
     void Awake()
     {
@@ -19,8 +18,8 @@ public class FxManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void PlayFx(GameObject fx, Vector3 position)
+    /*public void PlayFx(GameObject fx, Vector3 position)
     {
         GameObject newFx = Instantiate(fx, position, Quaternion.identity).GetComponent<GameObject>();
-    }
+    }*/
 }

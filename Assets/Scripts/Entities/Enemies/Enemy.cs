@@ -26,7 +26,8 @@ public abstract class Enemy : Character
 
         if (canBeHit())
         {
-            FxManager.instance.PlayFx(FxManager.instance.enemyHitFx, transform.position);
+            //FxManager.instance.PlayFx(FxManager.instance.enemyHitFx, transform.position);
+            PoolManager.Instance.SpawnFromPool("enemyHitVFX", transform.position, Quaternion.identity);
         }
     }
 
