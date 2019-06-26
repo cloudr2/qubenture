@@ -34,6 +34,6 @@ public abstract class Enemy : Character
     protected override void HealthComponent_OnDeath()
     {
         gameObject.SetActive(false);
-        GameManager.instance.CheckEnemiesAlive();
+        GameManager.Instance.CheckEnemiesAlive();
     }
 }

@@ -40,9 +40,9 @@ public class Console : MonoBehaviour, IUpdateable {
 
     private void Start()
     {
-        RegisterCommand("aggro", GameManager.instance.Aggro, "All enemies targets player.");
-        RegisterCommand("endgame", GameManager.instance.DestroyEnemies, "Destroy all enemies.");
-        RegisterCommandWithParams("godmode", GameManager.instance.GodMode, "Player is invulnerable.");
+        RegisterCommand("aggro", GameManager.Instance.Aggro, "All enemies targets player.");
+        RegisterCommand("endgame", GameManager.Instance.DestroyEnemies, "Destroy all enemies.");
+        RegisterCommandWithParams("godmode", GameManager.Instance.GodMode, "Player is invulnerable.");
     }
 
     private void ClearConsole() {

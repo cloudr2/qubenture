@@ -49,7 +49,6 @@ public class Player : Character, IUpdateable
 
     public void CustomUpdate() {
         Move(MoveDirection());
-        //FollowMouse();
         Attack();
         ThrowGrenade();
     }
@@ -164,8 +163,7 @@ public class Player : Character, IUpdateable
     protected override void HealthComponent_OnDeath()
     {
         print("Player destroyed.");
-        GameManager.instance.EndGame("LOSE");
-        //TODO: Dead animation
+        GameManager.Instance.EndGame("LOSE");
     }
 
     protected override void HealthComponent_OnHit()

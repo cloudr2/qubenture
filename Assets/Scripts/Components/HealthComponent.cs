@@ -29,6 +29,7 @@ public class HealthComponent : MonoBehaviour, IHitteable
     public void TakeDamage(float damage) {
         if (!isInvincible)
         {
+            GameManager.Instance.PlaySFX(GameManager.Instance.hitSFX);
             currentHealth -= damage;
             OnHit();
             CheckHealth();
@@ -42,7 +43,9 @@ public class HealthComponent : MonoBehaviour, IHitteable
     }
 
     public void CheckHealth() {
-        if (currentHealth <= 0)
+        if (currentHealth <= 0) {
+            GameManager.Instance.PlaySFX(GameManager.Instance.deathSFX);
             OnDeath();
+        }
     }
 }

@@ -88,7 +88,7 @@ public class Tower : Entity, IUpdateable
 
     private void TowerOnDeath()
     {
-        GameManager.instance.EndGame("LOSE");
+        GameManager.Instance.EndGame("LOSE");
     }
 
     private bool CanAttack()
