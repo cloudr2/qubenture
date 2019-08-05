@@ -16,6 +16,8 @@ public class HealthComponent : MonoBehaviour, IHitteable
     public bool isInvincible { get; set; }
     public bool isAlive { get { return currentHealth > 0 ? true : false; }  }
 
+    string lastHitType = "";
+
     void Start() {
         Initialize();
     }
@@ -26,11 +28,12 @@ public class HealthComponent : MonoBehaviour, IHitteable
         isInvincible = false;
     }
 
-    public void TakeDamage(float damage) {
+    public void TakeDamage(string type, float damage) {
         if (!isInvincible)
         {
             GameManager.Instance.PlaySFX(GameManager.Instance.hitSFX);
             currentHealth -= damage;
+            lastHitType = type;
             OnHit();
             CheckHealth();
         }
@@ -45,6 +48,12 @@ public class HealthComponent : MonoBehaviour, IHitteable
     public void CheckHealth() {
         if (currentHealth <= 0) {
             GameManager.Instance.PlaySFX(GameManager.Instance.deathSFX);
+
+            if (lastHitType == "sword")
+                GameManager.Instance.killedWithSword++;
+            else if (lastHitType == "bomb")
+                GameManager.Instance.killedWithBomb++;
+
             OnDeath();
         }
     }

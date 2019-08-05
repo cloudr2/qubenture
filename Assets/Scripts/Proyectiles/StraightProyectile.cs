@@ -24,7 +24,6 @@ public class StraightProyectile : MonoBehaviour, IUpdateable {
         direction = destination - transform.position;
         direction.Normalize();
         this.collisionLayerMask = collisionLayerMask;
-        //Destroy(this.gameObject,2f);
     }
 
     public void CustomUpdate() {
@@ -42,13 +41,12 @@ public class StraightProyectile : MonoBehaviour, IUpdateable {
                 continue;
 
             DoDamage(healthComponent);
-            //Destroy(this.gameObject);
             gameObject.SetActive(false);
         }
     }
 
     void DoDamage(HealthComponent targetHit) {
-        targetHit.TakeDamage(damage);
+        targetHit.TakeDamage("fireball", damage);
     }
 
     public void CustomLateUpdate() {

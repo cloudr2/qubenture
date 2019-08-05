@@ -25,6 +25,9 @@ public class Player : Character, IUpdateable
     public Slider hpBar;
     public GameObject grenadePrefab;
 
+    [HideInInspector]
+    public bool flawless = true;
+
     private float lastMeele;
     private float lastRanged;
     private bool rangedAnimationFinished = true;
@@ -119,7 +122,7 @@ public class Player : Character, IUpdateable
             {
                 foreach (var target in targets)
                 {
-                    target.GetComponent<HealthComponent>().TakeDamage(damage);
+                    target.GetComponent<HealthComponent>().TakeDamage("sword", damage);
                 }
             }
         }
@@ -173,7 +176,7 @@ public class Player : Character, IUpdateable
         {
             //FxManager.instance.PlayFx(FxManager.instance.playerHitFx,transform.position);
             PoolManager.Instance.SpawnFromPool("playerHitVFX", transform.position, Quaternion.identity);
-
+            flawless = false;
             anim.SetTrigger("OnHit");
         }
     }

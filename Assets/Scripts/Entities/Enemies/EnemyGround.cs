@@ -29,6 +29,6 @@ public class EnemyGround : Enemy
 
     protected override void AI_OnAttack() {
         anim.SetTrigger("Attack");
-        AI.CurrentTarget.GetComponent<HealthComponent>().TakeDamage(AI.damage); ;
+        AI.CurrentTarget.GetComponent<HealthComponent>().TakeDamage("hit",AI.damage); ;
     }
 }

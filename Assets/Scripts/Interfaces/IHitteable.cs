@@ -1,3 +1,3 @@
 ﻿public interface IHitteable {
-    void TakeDamage(float damage);
+    void TakeDamage(string type, float damage);
 }

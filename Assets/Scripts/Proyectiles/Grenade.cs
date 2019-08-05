@@ -26,7 +26,7 @@ public class Grenade : MonoBehaviour, IUpdateable {
         if (targets.Length > 0) {
             foreach (var target in targets) {
                 if(target.GetComponent<HealthComponent>())
-                    target.GetComponent<HealthComponent>().TakeDamage(damage);
+                    target.GetComponent<HealthComponent>().TakeDamage("bomb",damage);
             }
             Instantiate(explosionFX, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
