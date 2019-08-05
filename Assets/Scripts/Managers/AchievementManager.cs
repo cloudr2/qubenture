@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -44,10 +46,33 @@ public class AchievementManager : MonoBehaviour {
     }
 
     public void ShowWidget(string title, string desc) {
-        if (achWidget) {            
-            achWidget.titleTexbox.text = title;
-            achWidget.descTextBox.text = desc;
-            achWidget.gameObject.SetActive(true);
+        if (achWidget) {
+            if (achWidget.isShown)
+            {
+                string pendingTitle = title;
+                string pendingDesc = desc;
+                StartCoroutine(ShowWidgetDelayed(pendingTitle, pendingDesc));
+            }
+            else
+            {
+                SetWidgetInfo(title, desc);
+            }
+                achWidget.gameObject.SetActive(true);
         }
+    }
+
+    private void SetWidgetInfo(string title, string desc)
+    {
+        achWidget.titleTexbox.text = title;
+        achWidget.descTextBox.text = desc;
+    }
+
+    private IEnumerator ShowWidgetDelayed(string title, string desc)
+    {
+        AnimationClip[] clips = achWidget.GetComponent<Animator>().runtimeAnimatorController.animationClips;
+        float cliplenght = clips[0].length;
+
+        yield return cliplenght;
+        ShowWidget(title, desc);
     }
 }

@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour, IUpdateable {
             PlaySFX(clip);
 
         if (state == "WIN")
-            Invoke("NextLevel", 3);
+            Invoke("NextLevel", 8);
         else
             Time.timeScale = 0f;
     }
