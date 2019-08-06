@@ -48,6 +48,7 @@ MonoBehaviour:
   bossPrefab: {fileID: 8485728078250319867, guid: 2852468165c7ed64b9f9e56fd18f4f81,
     type: 3}
   BGMs:
+  - {fileID: 8300000, guid: d1a745667d222e440bbc2081c4c45f9b, type: 3}
   - {fileID: 8300000, guid: c3bcf45d99de17d44b90d90568ee0005, type: 3}
   - {fileID: 8300000, guid: 9bed507cc7c51b14fbf0ab2f7602377d, type: 3}
   - {fileID: 8300000, guid: 4fe7a695e2c87a6409518e1f75958ad2, type: 3}
@@ -58,6 +59,11 @@ MonoBehaviour:
   winSFX: {fileID: 8300000, guid: 52320e590bf774734a288886eba557ba, type: 3}
   loseSFX: {fileID: 8300000, guid: 35fbad8cdde724f11ba6481f1e64af71, type: 3}
   BossBGM: {fileID: 8300000, guid: 1076d381c2e078649b965de47bd0a220, type: 3}
+  killedWithSword: 0
+  killedWithBomb: 0
+  numberOfTries: 0
+  sessionTime: 0
+  lastSessionTime: 0
 --- !u!82 &9177446412386444114
 AudioSource:
   m_ObjectHideFlags: 0
@@ -68,7 +74,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: c3bcf45d99de17d44b90d90568ee0005, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1

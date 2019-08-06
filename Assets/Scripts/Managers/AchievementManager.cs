@@ -30,6 +30,8 @@ public class AchievementManager : MonoBehaviour {
     private WAchievementWidget achWidget;
     private int numberOfWidgetsToShow;
     public GameObject achWidgetPrefab;
+    public WAchievementWidget AchWidget { get { return achWidget; } }
+
 
     private void OnEnable() {
         SceneManager.sceneLoaded += OnSceneLoaded;
