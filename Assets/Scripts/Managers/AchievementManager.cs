@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -21,12 +19,6 @@ public class AchievementManager : MonoBehaviour {
     }
     #endregion
 
-    //win a stage without receiving damage
-    //kill n enemies with grenades
-    //kill n enemies with sword
-    //speedster
-    //win game in 1 try
-
     private WAchievementWidget achWidget;
     private int numberOfWidgetsToShow;
     public GameObject achWidgetPrefab;
@@ -40,7 +32,9 @@ public class AchievementManager : MonoBehaviour {
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
         achWidget = FindObjectOfType<WAchievementWidget>();
         if(achWidget)
+        {
             HideWidget();
+        }
     }
 
     public void HideWidget() {

@@ -48,6 +48,7 @@ MonoBehaviour:
   bossPrefab: {fileID: 8485728078250319867, guid: 2852468165c7ed64b9f9e56fd18f4f81,
     type: 3}
   BGMs:
+  - {fileID: 0}
   - {fileID: 8300000, guid: d1a745667d222e440bbc2081c4c45f9b, type: 3}
   - {fileID: 8300000, guid: c3bcf45d99de17d44b90d90568ee0005, type: 3}
   - {fileID: 8300000, guid: 9bed507cc7c51b14fbf0ab2f7602377d, type: 3}

@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-
+using TMPro;
 
 public class WAchievementWidget : MonoBehaviour
 {
-    public Text titleTexbox;
-    public Text descTextBox;
-    public bool isShown { get { return this.gameObject.activeSelf; } }
+    public TextMeshProUGUI titleTexbox;
+    public TextMeshProUGUI descTextBox;
+
+    public bool isShown { get { return gameObject.activeSelf; } }
 
     public void HideWidget() {
-        this.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 
 }
